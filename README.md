@@ -101,6 +101,7 @@ Follow the [original forum guide](https://forum.vorondesign.com/threads/adding-a
 | [SweatyCapy-Gerber.zip](SweatyCapy-Gerber.zip) | Zipped Gerbers, ready to upload to a board house |
 | [Schematic.pdf](Schematic.pdf) | Schematic (v1.0, single A4 sheet) |
 | [PCBImage.png](PCBImage.png) | 3D render of the assembled board |
+| [BOM.md](BOM.md) | Generic bill of materials |
 
 ## Credits
 
