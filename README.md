@@ -61,6 +61,7 @@ Follow the [original forum guide](https://forum.vorondesign.com/threads/adding-a
    Reboot afterwards. Notes:
    - SweatyCapy has **onboard 4.7 kΩ pull-ups**, so the software pull-up script from the original post is *not* needed.
    - Bus S1 uses GPIO 3 (SCL1), so **I²C1 must remain disabled** (`dtparam=i2c_arm=off`, which is the Raspberry Pi OS default). Don't stack an I²C device on this pin.
+   - GPIO 3 also has a fixed board-level pull-up on Raspberry Pi boards (part of the I²C1 bus wiring — see the [official GPIO documentation](https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#gpio): "Pins GPIO2 and GPIO3 have fixed pull-up resistors"). This is separate from the software-configurable internal pulls and is harmless here: in parallel with the onboard 4.7 kΩ it simply makes the S1 pull-up slightly stronger, which DS18B20s handle comfortably.
 
 3. **Find your sensors:**
 
