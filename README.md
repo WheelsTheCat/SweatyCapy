@@ -13,7 +13,7 @@ It was inspired by [mallcop's excellent write-up on the VORON Design forum — *
 | Feature | Details |
 |---|---|
 | **16× thermistor ports** | 3-pin JST connectors for DS18B20 Dallas 1-Wire digital temperature probes (GND / 3V3 / Signal) |
-| **Dual 1-Wire buses** | Ports are split across two buses (8 sensors each), each with its own 4.7 kΩ pull-up resistor — keeps bus loading well under the practical device limit. Bus S1 (Therm 1–8) → physical pin 5 (GPIO 3); bus S2 (Therm 9–16) → physical pin 7 (GPIO 4) |
+| **Dual 1-Wire buses** | Ports are split across two buses (8 sensors each) with onboard pull-ups — keeps bus loading well under the practical device limit. Bus S1 (Therm 1–8) → physical pin 5 (GPIO 3); bus S2 (Therm 9–16) → physical pin 7 (GPIO 4) |
 | **5 V screw terminal** | Power input for the Raspberry Pi via the GPIO header |
 | **3010 5 V cooling fan** | 2-pin fan header with a matching 30 mm cutout in the board; the fan may be powered externally if desired |
 | **6-pin JST expansion port** | SPI breakout for an ADXL345 accelerometer (input shaping) or other SPI devices |
@@ -59,9 +59,9 @@ Follow the [original forum guide](https://forum.vorondesign.com/threads/adding-a
    ```
 
    Reboot afterwards. Notes:
-   - SweatyCapy has **onboard 4.7 kΩ pull-ups**, so the software pull-up script from the original post is *not* needed.
+   - SweatyCapy has **onboard pull-ups**, so the software pull-up script from the original post is *not* needed.
    - Bus S1 uses GPIO 3 (SCL1), so **I²C1 must remain disabled** (`dtparam=i2c_arm=off`, which is the Raspberry Pi OS default). Don't stack an I²C device on this pin.
-   - GPIO 3 also has a fixed board-level pull-up on Raspberry Pi boards (part of the I²C1 bus wiring — see the [official GPIO documentation](https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#gpio): "Pins GPIO2 and GPIO3 have fixed pull-up resistors"). This is separate from the software-configurable internal pulls and is harmless here: in parallel with the onboard 4.7 kΩ it simply makes the S1 pull-up slightly stronger, which DS18B20s handle comfortably.
+   - **Pull-up details:** GPIO 3 has a fixed ~1.8 kΩ board-level pull-up on genuine Raspberry Pi boards (part of the I²C1 bus wiring — see the [official GPIO documentation](https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#gpio): "Pins GPIO2 and GPIO3 have fixed pull-up resistors"). That alone is a strong, valid 1-Wire pull-up, so **R1 (the S1 pull-up) is optional on a genuine Pi** — populate 10 kΩ as a light fallback, or 4.7 kΩ only if your host board lacks the GPIO 3 pull-up (some clones/carrier boards). **R2 (4.7 kΩ on S2/GPIO 4) is always required** — GPIO 4 has no fixed pull-up.
 
 3. **Find your sensors:**
 
