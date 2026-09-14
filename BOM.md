@@ -11,7 +11,7 @@ Generic BOM — any equivalent part with the same footprint/pitch will work.
 | Fan | 1 | JST-XH 2-pin header (B2B-XH-A) | 3010 fan connector | 5 V / GND |
 | Power1 | 1 | Screw terminal, 2-pos, 5.08 mm pitch | 5 V power input for the Pi | e.g. Phoenix-style KF301-5.08 |
 | H1 | 1 | 2×20 female stacking header (DS1023-2*20SF11) | Raspberry Pi 40-pin GPIO connector | Extra-tall / stacking style recommended for clearance |
-| R1 | 1 | 10 kΩ resistor, 1/4 W, through-hole (optional — see note) | 1-Wire bus S1 pull-up | S1 rides on GPIO 3, which already has a fixed ~1.8 kΩ pull-up on genuine Raspberry Pi boards. R1 may be left unpopulated (DNP) on a genuine Pi; fit 10 kΩ for a light parallel fallback, or 4.7 kΩ only if your host board lacks the GPIO 3 I²C pull-up |
+| R1 | 1 | 4.7 kΩ resistor, 1/4 W, through-hole — **DNP on genuine Raspberry Pi** | 1-Wire bus S1 pull-up | GPIO 3 already has a fixed ~1.8 kΩ pull-up on genuine Pi boards — adding R1 in parallel only lowers the total (1.8k ∥ 4.7k ≈ 1.3 kΩ, below the ~1.5 kΩ floor where the DS18B20 open-drain struggles to pull the bus low). Leave unpopulated on a genuine Pi; fit 4.7 kΩ **only** if the host board lacks the GPIO 3 I²C pull-up (some clones/carriers), where it acts as the sole pull-up |
 | R2 | 1 | 4.7 kΩ resistor, 1/4 W, through-hole | 1-Wire bus S2 pull-up | Required — GPIO 4 has no fixed pull-up. 5% tolerance is fine |
 | U2 | 1 | 47 µF electrolytic capacitor, ≥10 V, radial | 5 V rail bulk decoupling | Observe polarity |
 
